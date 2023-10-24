@@ -13,6 +13,8 @@ import numpy as np
 import pandas as pd
 import os
 import warnings
+import sys
+
 try:
     import easyaccess as ea
     DEBUG = False
@@ -22,8 +24,16 @@ except:
 #---------------------------------
 
 # Inputs and output location
-filename = "./good_agn.csv"
-outloc = "./good_agn_out/"
+try:
+    filename = sys.argv[1]
+except:
+    filename = "./good_agn.csv"
+try:
+    outloc = sys.argv[2]
+    if outloc[:2]!="./": outloc = "./"+outloc
+    if outloc[-1]!="/": outloc+="/"
+except:
+    outloc = filename.replace(".csv","_out/")
 
 # Selection tolerances & data to acquire
 RAtol, DECtol = 0.00027, 0.00027
